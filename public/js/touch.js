@@ -1,3 +1,16 @@
+/*
+Interface.js
+
+Primarily written by Myles Borins
+Touch stuffs influenced by MagicTouch by Boris Smus
+found at https://github.com/borismus/MagicTouch
+
+Interface.js is distributed under the terms the MIT or GPL2 Licenses. 
+Choose the license that best suits your project. The text of the MIT and GPL 
+licenses can be found in the root directory. 
+
+*/
+
 /*global document, setInterval, console, window, jQuery */
 
 var touch = touch || {};

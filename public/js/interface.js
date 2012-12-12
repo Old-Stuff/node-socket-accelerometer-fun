@@ -1,3 +1,14 @@
+/*
+Interface.js
+
+Primarily written by Myles Borins
+
+Interface.js is distributed under the terms the MIT or GPL2 Licenses. 
+Choose the license that best suits your project. The text of the MIT and GPL 
+licenses can be found in the root directory. 
+
+*/
+
 /*global jQuery, io, console, socket, window */
 
 var iface = iface || {};
