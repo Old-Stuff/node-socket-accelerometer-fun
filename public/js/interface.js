@@ -1,30 +1,29 @@
-/*global jQuery, io, window  */
+/*global jQuery, io, console, socket, window */
 
-var ifjs = ifjs || {};
+var iface = iface || {};
 
-(function () {
+(function ($) {
     'use strict';
-    ifjs.model = {
+    // Set up the socket 
+    iface.model = {
         tilt: {
-            alpha: 0,
+            alpha : 0,
             beta: 0,
             gamma: 0
         }
-    };
+    }
+    iface.socket = io.connect('http://192.168.1.101:1337');
     
-    ifjs.socket = io.connect('http:/basestation.local:1337');
+    iface.socket.on('poll', function(data){
+        iface.socket.emit('alpha', iface.model.tilt.alpha);
+        iface.socket.emit('beta', iface.model.tilt.beta);
+        iface.socket.emit('gamma', iface.model.tilt.gamma);
+    });
     
-    ifjs.sendTilt = function() {
-        ifjs.socket.emit('alpha', ifjs.model.tilt.alpha);
-        ifjs.socket.emit('beta', ifjs.model.tilt.beta);
-        ifjs.socket.emit('gamma', ifjs.model.tilt.gamma);
-    };
-    
-
-    ifjs.accel = window.addEventListener("deviceorientation", function(event) {
-        // Update model with events
-        ifjs.model.tilt.alpha = event.alpha;
-        ifjs.model.tilt.beta = event.beta;
-        ifjs.model.tilt.gamma = event.gamma;
+    iface.accel = window.addEventListener("deviceorientation", function(event) {
+        // process event.alpha, event.beta and event.gamma
+        iface.model.tilt.alpha = event.alpha;
+        iface.model.tilt.beta = event.beta;
+        iface.model.tilt.gamma = event.gamma;
     }, true);
 }(jQuery));
