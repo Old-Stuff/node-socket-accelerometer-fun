@@ -14,6 +14,10 @@ app.get('/', function (req, res) {
   res.sendfile(__dirname + '/public/index.html');
 });
 
+app.get('/test', function (req, res) {
+  res.sendfile(__dirname + '/public/test.html');
+});
+
 // app.get('/piano', function (req, res) {
 //   res.sendfile(__dirname + '/public/piano.html');
 // });

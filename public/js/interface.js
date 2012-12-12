@@ -12,6 +12,13 @@ var iface = iface || {};
             gamma: 0
         }
     }
+    
+/*    iface.touchdiv = document.getElementById('touch');
+    iface.touches = [];
+    iface.touchdiv.addEventListener('touchmove', function(event){
+        iface.touches = event.targetTouches;
+    });*/
+    
     iface.socket = io.connect('http://192.168.1.101:1337');
     
     iface.socket.on('poll', function(data){
