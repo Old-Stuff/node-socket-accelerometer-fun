@@ -1,0 +1,38 @@
+##############
+#### TODO ####
+##############
+
+#################################
+## Replace Socket.io with Shoe ##
+#################################
+
+    https://github.com/substack/shoe
+    
+    I am specifically interested in doing this in order to create sockets without having to hard code the ip in the client side script.  This will be useful for interfaces running on local networks that cannot resolve mdns... *cough* android *cough*  This could potentially be solved with a client side mdns implementation as well... but I don't even know if that exists and couldn't be troubled to google it atm... despite the fact that I could have done so in the time it took to write this.  Dem' the breaks.
+
+####################################################################
+## Introduce Modularity / IOC / Accessibility with Fluid Infusion ##
+####################################################################
+    
+    http://fluidproject.org/products/infusion/
+    
+    For now I am just going to try and "ship it" for my deadline, but everything should be implemented in infusion using IOC in order to make things truly useful outside the context of this project
+
+##############################
+## Code Generation Via JSON ##
+##############################
+
+    This should actually be quite easy to get for free once I get infusion up and running
+
+#######################################################
+## Main Page to deploy / organize control interfaces ##
+#######################################################
+
+    / should lead to a landing page that will allow you to either script an interface using json, generate an interface using a ui, or visit a particular interface already deployed
+
+#################################### 
+## Get some unit Tests up in here ##
+####################################
+
+    Now this is something I never really did before... should totes start it though!  I should ask colin what to use
+    
