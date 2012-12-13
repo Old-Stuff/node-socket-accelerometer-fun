@@ -11,13 +11,48 @@ licenses can be found in the root directory.
 
 */
 
-/*global document, setInterval, console, window, jQuery */
+/*global document, setInterval, window, jQuery */
 
 var touch = touch || {};
 
 (function ($) {
     
     $(function(){
+        touch.num2word = ['one', 'two', 'three', 'four', 'five'];
+        
+        touch.model = {
+            one: {
+                name: 'one',
+                pressed: false,
+                x: 0,
+                y: 0
+            },
+            two: {
+                name: 'two',
+                pressed: false,
+                x: 0,
+                y: 0
+            },
+            three: {
+                name: 'three',
+                pressed: false,
+                x: 0,
+                y: 0
+            },
+            four: {
+                name: 'four',
+                pressed: false,
+                x: 0,
+                y: 0
+            },
+            five: {
+                name: 'five',
+                pressed: false,
+                x: 0,
+                y: 0
+            }
+        };
+
         touch.canvas = document.getElementById('canvas');
         touch.ctx = touch.canvas.getContext('2d');
         touch.timer = setInterval(touch.update, 15);
@@ -28,6 +63,9 @@ var touch = touch || {};
         touch.canvas.addEventListener('touchend', function() {
             touch.ctx.clearRect(0, 0, w, h);
             touch.count = touch.count - 1;
+            if (touch.count < 5){
+                touch.model[touch.num2word[touch.count]].pressed = false;
+            }
             if(touch.count === 0) {
                 touch.touches = [];
             }
@@ -39,7 +77,10 @@ var touch = touch || {};
         });
 
         touch.canvas.addEventListener('touchstart', function(event) {
-          console.log('start');
+          touch.touches = event.touches;
+          if (touch.count < 5){
+              touch.model[touch.num2word[touch.count]].pressed = true;
+          }
           touch.count = touch.count + 1;
         });
     });
@@ -77,14 +118,17 @@ var touch = touch || {};
 
             touch.ctx.beginPath();
             touch.ctx.arc(px, py, 50, 0, 2*Math.PI, true);
-            
+            if (i < 5){
+                touch.model[touch.num2word[i]].x = px;
+                touch.model[touch.num2word[i]].y = py;
+            }
+
             touch.ctx.fillStyle = touch.colors[i];
             touch.ctx.fill();
 
             touch.ctx.lineWidth = 2.0;
             touch.ctx.strokeStyle = "rgba(0, 0, 200, 0.8)";
             touch.ctx.stroke();
-/*            console.log('drawn circle at ' + px +',' + py);*/
         }
 
         updateStarted = false;

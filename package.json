@@ -11,7 +11,8 @@
 		"express": "2.5.9",
 		"node-osc": ">0.1.0",
 		"socket.io": "0.9.10",
-		"mdns": "*"
+		"mdns": "*",
+    "underscore": "*"
 	},
 	"keywords": [
 		"osc",

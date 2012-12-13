@@ -9,9 +9,11 @@ licenses can be found in the root directory.
 
 */
 
-/*global jQuery, io, console, socket, window */
+/*global jQuery, window, io */
 
 var iface = iface || {};
+var touch = touch || {};
+touch.touches = touch.touches || [];
 
 (function ($) {
     'use strict';
@@ -22,7 +24,7 @@ var iface = iface || {};
             beta: 0,
             gamma: 0
         }
-    }
+    };
     
 /*    iface.touchdiv = document.getElementById('touch');
     iface.touches = [];
@@ -30,12 +32,13 @@ var iface = iface || {};
         iface.touches = event.targetTouches;
     });*/
     
-    iface.socket = io.connect('http://192.168.1.101:1337');
+    iface.socket = io.connect('http://192.168.177.19:1337');
     
     iface.socket.on('poll', function(data){
         iface.socket.emit('alpha', iface.model.tilt.alpha);
         iface.socket.emit('beta', iface.model.tilt.beta);
         iface.socket.emit('gamma', iface.model.tilt.gamma);
+        iface.socket.emit('touch', touch.model);
     });
     
     iface.accel = window.addEventListener("deviceorientation", function(event) {
