@@ -39,9 +39,15 @@ io.sockets.on('connection', function (socket) {
     socket.on('touch', function (data) {
         _.each(data, function(finger) {
             if (finger.pressed){
-                client.send("/" + finger.name, finger.x, finger.y);
+                client.send("/" + finger.name + "/position", finger.x, finger.y);
             }
         });
+    });
+    socket.on('touchOn', function (data) {
+        client.send("/" + data + "/state", 1);
+    });
+    socket.on('touchOff', function (data) {
+        client.send("/" + data + "/state", 0);
     });
     socket.on('disconnect', function(){
         clearInterval(interval);

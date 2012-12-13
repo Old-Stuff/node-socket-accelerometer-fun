@@ -14,6 +14,7 @@ licenses can be found in the root directory.
 /*global document, setInterval, window, jQuery */
 
 var touch = touch || {};
+var iface = iface || {};
 
 (function ($) {
     
@@ -65,6 +66,7 @@ var touch = touch || {};
             touch.count = touch.count - 1;
             if (touch.count < 5){
                 touch.model[touch.num2word[touch.count]].pressed = false;
+                iface.socket.emit('touchOff', touch.num2word[touch.count]);
             }
             if(touch.count === 0) {
                 touch.touches = [];
@@ -80,6 +82,7 @@ var touch = touch || {};
           touch.touches = event.touches;
           if (touch.count < 5){
               touch.model[touch.num2word[touch.count]].pressed = true;
+              iface.socket.emit('touchOn', touch.num2word[touch.count]);
           }
           touch.count = touch.count + 1;
         });
