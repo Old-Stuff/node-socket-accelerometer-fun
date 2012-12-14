@@ -16,13 +16,16 @@ The api is pretty simple.  It will send osc messages over local host to port 333
 
 ####Finger
 /[fingernumber]/state i  ~ state of finger... 1 for on and 0 for off
+
 /[fingernumber]/position f f ~ x and y co-ordinates of the finger
 
 finger number can be "one", "two", "three", "four", "five
 
 ####Tilt
 /alpha f ~ value for accelerometer alpha
+
 /beta f ~ value for accelerometer beta
+
 /gamma f ~ value for accelerometer gamma
 
 ###Examples
