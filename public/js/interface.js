@@ -32,7 +32,7 @@ touch.touches = touch.touches || [];
         iface.touches = event.targetTouches;
     });*/
     
-    iface.socket = io.connect('http://192.168.177.19:1337');
+    iface.socket = io.connect();
     
     iface.socket.on('poll', function(data){
         iface.socket.emit('alpha', iface.model.tilt.alpha);
