@@ -6,17 +6,25 @@ SinOsc s[5];
 JCRev r[5];
 ADSR adsr[5];
 Chorus c;
+Step st1=> Envelope modFreqEnv => blackhole;
+Step st2=> Envelope modDepthEnv => blackhole;
+Step fingerstep[5];
+Envelope fingerEnv[5];
+200::ms => modFreqEnv.duration;
+200::ms => modDepthEnv.duration;
 
 0 => c.modFreq;
 0 => c.modDepth;
 0.5 => c.mix;
 
 for(int i ; i < 5; 1 +=> i ) {
-  s[i] => r[i] => adsr[i] => c => dac;
-  .8 => s[i].gain;
-  .1 => r[i].mix;
-  adsr[i].set( 50::ms, 8::ms, .5, 500::ms );
-  adsr[i].keyOff();
+    fingerstep[i] => fingerEnv[i] => blackhole;
+    100::ms => fingerEnv[i].duration;
+    s[i] => r[i] => adsr[i] => c => dac;
+    .8 => s[i].gain;
+    .1 => r[i].mix;
+    adsr[i].set( 50::ms, 8::ms, .5, 500::ms );
+    adsr[i].keyOff();
 }
 
 
@@ -42,6 +50,18 @@ recv.event( "/alpha f") @=> OscEvent @ alpha;
 recv.event( "/beta f") @=> OscEvent @ beta;
 recv.event( "/gamma f") @=> OscEvent @ gamma;
 
+fun void enveloper(){
+    while(true)
+    {
+        c.modFreq(modFreqEnv.last());
+        c.modDepth(modDepthEnv.last());
+        for(int i ; i < 5; 1 +=> i ) {
+            s[i].freq(fingerEnv[i].last());
+        }
+        1::samp=>now;
+    }
+}
+
 fun void tiltAlpha(){
   float al;
   while( true )
@@ -50,7 +70,7 @@ fun void tiltAlpha(){
     
     while( alpha.nextMsg() ) {
       alpha.getFloat() => al;
-      al => c.modFreq;
+      modFreqEnv.target(al);
     }
   }
 }
@@ -64,7 +84,7 @@ fun void tiltBeta(){
     while( beta.nextMsg() ) {
       beta.getFloat() => bt;
       Math.fabs(bt) / 400 => bt;
-      bt => c.modDepth;
+      modDepthEnv.target(bt);
     }
   }
 }
@@ -98,7 +118,8 @@ fun void receivePosition( OscEvent event, int finger){
 
           // getFloat fetches the expected float (as indicated by "i f")
           event.getInt() => x;
-          Math.pow(x, 2) / 300 => s[finger].freq;
+          fingerEnv[finger].target(Math.pow(x, 2) / 300);
+          // Math.pow(x, 2) / 300 => s[finger].freq;
           event.getInt() => y;
           y / 450 => r[finger].mix;
 
@@ -131,6 +152,7 @@ fun void onPress( OscEvent event, int finger){
   }
 }
 
+spork ~ enveloper();
 spork ~ receivePosition(onePosition, 0);
 spork ~ onPress(oneState, 0);
 spork ~ receivePosition(twoPosition, 1);
@@ -143,5 +165,6 @@ spork ~ receivePosition(fivePosition, 4);
 spork ~ onPress(fiveState, 4);
 spork ~ tiltAlpha();
 spork ~ tiltBeta();
+// spork ~ tiltGamma();
 
 1::day => now;
