@@ -30,7 +30,7 @@ for (var dev in ifaces) {
 }
 
 if (ip != ""){
-    encoder.encode(ip + ":1337", 'currentIP.png',{
+    encoder.encode("http://" + ip + ":1337", 'currentIP.png',{
         dot_size: 12
     });
     child = exec('openimage.sh',
