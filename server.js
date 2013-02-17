@@ -5,43 +5,9 @@ var app = require('express').createServer(),
     osc = require('node-osc'),
     client = new osc.Client('0.0.0.0', 3333),
     mdns = require('mdns');
-    _ = require('underscore'),
-    Encoder = require('qr').Encoder,
-    os = require('os'),
-    exec = require('child_process').exec;
+    _ = require('underscore');
 
 app.listen(1337);
-
-var encoder = new Encoder,
-    ifaces = os.networkInterfaces(),
-    ip = '',
-    chil;
-
-for (var dev in ifaces) {
-  var alias=0;
-  ifaces[dev].forEach(function(details){
-    if (details.family=='IPv4') {
-        if (dev == "en1")
-        {
-            ip = details.address;
-        }
-    }
-  });
-}
-
-if (ip != ""){
-    encoder.encode(ip + ":1337", 'currentIP.png',{
-        dot_size: 12
-    });
-    child = exec('openimage.sh',
-      function (error, stdout, stderr) {
-        //console.log('stdout:', stdout);
-        //console.log('stderr:', stderr);
-        //if (error !== null) {
-        //  console.log('exec error:', error);
-        //}
-    });
-}
 
 // advertise a http server on port 1337
 var ad = mdns.createAdvertisement(mdns.tcp('http'), 1337);
