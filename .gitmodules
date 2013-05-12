@@ -1,3 +1,0 @@
-[submodule "public/js/third_party/d3"]
-	path = public/js/third_party/d3
-	url = git://github.com/mbostock/d3.git
