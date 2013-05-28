@@ -35,9 +35,15 @@ touch.touches = touch.touches || [];
     iface.socket = io.connect();
     
     iface.socket.on('poll', function(data){
-        iface.socket.emit('alpha', iface.model.tilt.alpha);
-        iface.socket.emit('beta', iface.model.tilt.beta);
-        iface.socket.emit('gamma', iface.model.tilt.gamma);
+        if (iface.model.alpha !== null && iface.model.alpha !== undefined){
+            iface.socket.emit('alpha', iface.model.tilt.alpha);
+        }
+        if (iface.model.beta !== null && iface.model.beta !== undefined){        
+            iface.socket.emit('beta', iface.model.tilt.beta);
+        }
+        if (iface.model.gamma !== null && iface.model.beta !== undefined){
+            iface.socket.emit('gamma', iface.model.tilt.gamma);
+        }
         iface.socket.emit('touch', touch.model);
     });
     
