@@ -1,7 +1,7 @@
 {
 	"name": "interface.js",
 	"description": "Browser based generative osc controller",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"main": "server.js",
 	"athor": {
 		"name": "Myles Borins",
@@ -11,9 +11,7 @@
 		"express": "2.5.9",
 		"node-osc": ">0.1.0",
 		"socket.io": "0.9.10",
-		"mdns": "*",
-    "underscore": "*",
-    "qr": "*"
+    "underscore": "*"
 	},
 	"keywords": [
 		"osc",

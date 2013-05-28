@@ -4,14 +4,9 @@ var app = require('express').createServer(),
     io = require('socket.io').listen(app),
     osc = require('node-osc'),
     client = new osc.Client('0.0.0.0', 3333),
-    mdns = require('mdns');
     _ = require('underscore');
 
 app.listen(1337);
-
-// advertise a http server on port 1337
-var ad = mdns.createAdvertisement(mdns.tcp('http'), 1337);
-ad.start();
 
 app.get('/', function (req, res) {
   res.sendfile(__dirname + '/public/index.html');
